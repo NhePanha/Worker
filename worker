@@ -1,0 +1,310 @@
+#include<iostream>
+#include<iomanip>
+#include<string.h>
+#include<stdbool.h>
+using namespace std;
+class Employee{
+	private:
+		int id;
+		string name;
+		string gender;
+		float salary;
+		float income;
+		float rate;
+		float hour;
+	public:
+		float newincome=0;
+	public:
+		int getID()
+		{
+			return id;
+		}
+		string getName()
+		{
+			return name;
+		}
+		float getSalary()
+		{
+			return salary;
+		}
+		float getIncome()
+		{
+			return income;
+		}
+		
+		void Input()
+		{
+			cout<<"Input ID      : ";cin>>id;cin.ignore();
+			cout<<"Input Name    : ";getline(cin,name);
+			cout<<"Input Gender  : ";getline(cin,gender);
+			cout<<"Input Salary  : ";cin>>salary;
+			cout<<"Input Rate    : ";cin>>rate;
+			cout<<"Input Hour    : ";cin>>hour;
+			income=salary+(rate*hour);
+		}
+		void Output()
+		{
+			cout<<"_________________________________________________________________________________"<<endl;
+			cout<<left<<setw(10)<<id<<setw(10)<<name<<setw(10)<<gender<<"$"<<fixed<<setprecision(2)<<setw(10)<<salary<<
+			setw(10)<<rate<<setw(10)<<hour<<setw(10)<<income<<setw(10)<<newincome<<endl;
+		}
+		
+};
+void Header()
+{
+	cout<<left<<setw(10)<<"ID"<<setw(10)<<"NAME"<<setw(10)<<"GENDER"<<setw(10)<<"SALARY"<<setw(10)<<"RATE"<<setw(10)<<"HOUR"
+	<<setw(10)<<"INCOME"<<setw(10)<<"NEWINCOME"<<endl;
+};
+// void loadingbar()
+// {
+// 	system("Color a");
+//     char x =219;
+//     //char x =178;
+//     //char x =175;
+//     //char x =177;
+    
+    
+//    cout<<"\n""\t\t\t\t        LOADING.....\t\t\t\t\n";
+//    cout<<"\t\t\t"; for(int i=0;i<40;i++)
+//   {
+//     cout<<x;
+//     Sleep(80);
+//   }
+//   system("cls");
+// }
+int main()
+{
+	Employee emp[20];
+	bool b=false;
+	int i,j,n=0,op;
+	float sum=0;
+	//loadingbar();
+	do
+	{
+		//system("cls");
+		cout<<"====>> OPTION <<====="<<endl;
+		cout<<"[1] Input              | "<<endl;
+		cout<<"[2] Output             | "<<endl;
+		cout<<"[3] Search             | "<<endl;
+		cout<<"[4] Show Maximum Income| "<<endl;
+		cout<<"[5] Show Minimum Income| "<<endl;
+		cout<<"[6] Show Equal Income  | "<<endl;
+		cout<<"[7] Sort By Income     | "<<endl;
+		cout<<"[8] Sum Money          | "<<endl;
+		cout<<"[9] Add 15% On Income<150$"<<endl;
+		cout<<"[10]Add Employee       | "<<endl;
+		cout<<"[11]Delete Employee    | "<<endl;
+		cout<<"|______________________| "<<endl;
+		cout<<"Please Choose Option : ";cin>>op;
+		switch(op)
+		{
+			case 1:{
+				cout<<"Input Number Of Employee = ";cin>>n;
+				for(i=0;i<n;i++)
+				{    
+					cout<<"\t\t  #"<<i+1<<endl;
+					emp[i].Input();
+				}
+				//getch();
+			}break;
+			case 2:{
+				if(n==0)
+				{
+				   cout<<"\n\n\t\t\t\tNo Data "<<endl;
+				}
+				else
+				{
+					  Header();
+					for(i=0;i<n;i++)
+				   {
+					  emp[i].Output();
+				   }
+				}
+				//getch();
+			}break;
+			case 3:{
+				int sid;
+				bool b=false;
+				cout<<"Input ID to Search....";cin>>sid;
+				Header();
+				for(i=0;i<n;i++)
+				{
+					
+					if(sid==emp[i].getID())
+					{
+						emp[i].Output();
+						b=true;
+					}
+				}
+				if(b==true)
+				{
+					cout<<"\n\t\t Search Found....."<<endl;
+				}
+				else
+				{
+					cout<<"\n\t\t Search not Found....."<<endl;
+				
+				}
+				//getch();
+			}break;
+			case 4:{
+				Employee emp1;
+				Header();
+				for(i=0;i<n;i++)
+				{
+					for(j=i+1;j<n;j++)
+					{
+						if(emp[i].getSalary()<emp[j].getSalary())
+						{
+							emp1=emp[i];
+							emp[i]=emp[j];
+							emp[j]=emp1;
+						}
+					}
+				}
+				emp[0].Output();
+				//getch();
+			}break;
+			case 5:{
+				Employee emp1;
+				Header();
+				for(i=0;i<n;i++)
+				{
+					for(j=i+1;j<n;j++)
+					{
+						if(emp[i].getSalary()>emp[j].getSalary())
+						{
+							emp1=emp[i];
+							emp[i]=emp[j];
+							emp[j]=emp1;
+						}
+					}
+				}
+				emp[0].Output();
+				//getch();
+			}break;
+			case 6:{
+				Header();
+				for(i=0;i<n;i++)
+				{
+					for(j=i+1;j<n;j++)
+					{
+						if(emp[i].getSalary()==emp[j].getSalary())
+						{
+							emp[i].Output();
+						}
+					}
+				}
+				//getch();
+			}break;
+			case 7:{
+				Employee emp1;
+				bool b=false;
+				for(i=0;i<n;i++)
+				{
+					for(j=i+1;j<n;j++)
+					{
+						if(emp[i].getName()>emp[j].getName())
+						{
+							emp1=emp[i];
+							emp[i]=emp[j];
+							emp[j]=emp1;
+							b=true;
+						}
+					}
+				}
+				if(b==true)
+				{
+					cout<<"\n\t\t Sort Succesful....."<<endl;
+				}
+				else
+				{
+					cout<<"\n\t\t Error to Sort....."<<endl;
+				}
+				//getch();
+			}break;
+			case 8:{
+				for(i=0;i<n;i++)
+				{
+					sum=sum+emp[i].getSalary();
+				}
+				cout<<" Sum Of Salary = "<<sum<<"$"<<endl;
+				//getch();
+			}break;
+			case 9:{
+				bool b=false;
+				for(i=0;i<n;i++)
+				{
+					if(emp[i].getIncome()<150)
+					{
+					    emp[i].newincome=emp[i].getIncome()+(emp[i].getIncome()*0.15);
+						b=true;
+					}
+					else
+					{
+						emp[i].newincome=emp[i].getIncome();
+						b=true;
+					}
+				}
+				if(b==true)
+				{
+					cout<<"\n\t\t Add Succesful....."<<endl;
+				}
+				else
+				{
+					cout<<"\n\t\t Error to Add....."<<endl;
+				
+				}
+				//getch();
+			}break;
+			case 10:{
+				int add;
+				cout<<"How Many Employee do you want to add = ";cin>>add;
+				for(i=n;i<(n+add);i++)
+				{
+					emp[i].Input();
+					b=true;
+				}
+				n+=add;
+				if(b==true)
+				{
+					cout<<"\n\t\t Add Succesful....."<<endl;
+					
+				}
+				else
+				{
+					cout<<"\n\t\t Error to Add....."<<endl;
+				
+				}
+				//getch();
+			}break;
+			case 11:{
+				string d_name;
+				cout<<"Input Name to Delete....";cin.ignore();getline(cin,d_name);
+				for(i=0;i<n;i++)
+				{
+					if(d_name==emp[i].getName())
+					{
+						for(j=i;j<n;j++)
+						{
+							emp[j]=emp[j+1];
+							b=true;
+						}
+						n--;
+					}
+				}
+				if(b==true)
+				{
+					cout<<"\n\t\t Delete Succesful....."<<endl;
+				}
+				else
+				{
+					cout<<"\n\t\t Error to Delete....."<<endl;
+				
+				}
+				//getch();
+			}break;
+			default:cout<<"\n\t No Option "<<endl;
+		}
+	}while(op!=0);
+}
